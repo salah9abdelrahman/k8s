@@ -5,3 +5,5 @@
 - Get pods `kubectl get pods` or for more info `kubectl get pods -o wide`. To parse the output as json `kubectl get pods -o json` or yml `kubectl get pods -o yaml`
 - The describe sub-command returned details of the specified resource `kubectl describe pod db`
 - delete pod `kubectl delete -f db.yml`
+- port forward a service `kubectl port-forward service/service-demo 3000:28017 --address 0.0.0.0`
+- get endpoints `kubectl get ep service-demo -o yaml`
