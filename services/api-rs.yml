@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: api
+      service: api
+  template:
+    metadata:
+      labels:
+        type: api
+        service: api
+        language: go
+    spec:
+      containers:
+        - name: api
+          image: vfarcic/go-demo-2
+          env:
+            - name: DB
+              value: mongo-db-svc #  to connect to the database running on the DNS
+          readinessProbe: #  used by the iptables
+            httpGet:
+              path: /demo/hello
+              port: 8080
+            periodSeconds: 1 # default: 10
+          livenessProbe: #  to determine whether a Pod is alive or it should be replaced by a new one.
+            httpGet:
+              path: /demo/hello
+              port: 8080

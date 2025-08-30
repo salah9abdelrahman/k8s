@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: service-demo
 spec:
-  type: NodePort
+  type: NodePort # ClusterIP is the default
   ports:
     - port: 28017
 #      nodePort: 30001 # make it random

@@ -7,3 +7,5 @@
 - delete pod `kubectl delete -f db.yml`
 - port forward a service `kubectl port-forward service/service-demo 3000:28017 --address 0.0.0.0`
 - get endpoints `kubectl get ep service-demo -o yaml`
+- Delete the whole cluster `minikube delete --all`
+- list all cluster resources `kubectl get all`

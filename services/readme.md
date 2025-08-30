@@ -1,0 +1,5 @@
+- kubectl create -f db-rs.yml
+- kubectl create -f db-svc.yml
+- kubectl create -f api-rs.yml
+- kubectl create -f api-svc.yml
+- kubectl get all
