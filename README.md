@@ -9,3 +9,4 @@
 - get endpoints `kubectl get ep service-demo -o yaml`
 - Delete the whole cluster `minikube delete --all`
 - list all cluster resources `kubectl get all`
+- update image in a deployment `kubectl set image -f deployment.yml db=mongo:3.4 --record`
