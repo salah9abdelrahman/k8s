@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-api-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: api
+      service: deploy-api-demo
+  minReadySeconds: 1 # defines minimum number of seconds before Kubernetes starts considering the Pods healthy. default: 0
+  progressDeadlineSeconds: 60 # defines the maximum number of seconds for a deployment to be considered as failed. default: 600
+  revisionHistoryLimit: 5 #  defines the number of old ReplicaSets we can roll back. default: 10
+  strategy:
+    type: RollingUpdate # either RollingUpdate-default- or Recreate
+    rollingUpdate:
+      maxSurge: 1 # defines the maximum number of Pods that can exceed the desired number (set using replicas).
+      maxUnavailable: 1 # defines the maximum number of Pods that are not operational.
+  template:
+    metadata:
+      labels:
+        type: api
+        service: deploy-api-demo
+        language: go
+    spec:
+      containers:
+        - name: api
+          image: vfarcic/go-demo-2
+          env:
+            - name: DB
+              value:  deployment-db-demo
+          readinessProbe:
+            httpGet:
+              path: /demo/hello
+              port: 8080
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /demo/hello
+              port: 8080
