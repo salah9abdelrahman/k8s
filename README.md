@@ -10,3 +10,6 @@
 - Delete the whole cluster `minikube delete --all`
 - list all cluster resources `kubectl get all`
 - update image in a deployment `kubectl set image -f deployment.yml db=mongo:3.4 --record`
+- check the status of the rollout `kubectl rollout status -w -f api-deployment.yml`
+- check the rollout history `kubectl rollout history -f api-deployment.yml`
+- Roll back `kubectl rollout undo -f api-deployment.yml`
