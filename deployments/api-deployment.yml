@@ -8,14 +8,14 @@ spec:
     matchLabels:
       type: api
       service: deploy-api-demo
-  minReadySeconds: 1 # defines minimum number of seconds before Kubernetes starts considering the Pods healthy. default: 0
-  progressDeadlineSeconds: 60 # defines the maximum number of seconds for a deployment to be considered as failed. default: 600
-  revisionHistoryLimit: 5 #  defines the number of old ReplicaSets we can roll back. default: 10
+  minReadySeconds: 1 # Minimum time (1s) before Kubernetes considers Pods healthy. Prevents premature traffic routing to new Pods. Default: 0
+  progressDeadlineSeconds: 60 # Maximum time (60s) for deployment to make progress before marking as failed. Helps detect stuck deployments. Default: 600
+  revisionHistoryLimit: 5 # Number of old ReplicaSets to keep for rollback purposes. Balances storage usage vs. rollback capability. Default: 10
   strategy:
-    type: RollingUpdate # either RollingUpdate-default- or Recreate
+    type: RollingUpdate # Deployment strategy: RollingUpdate (gradual) or Recreate (all-at-once). RollingUpdate ensures zero downtime.
     rollingUpdate:
-      maxSurge: 1 # defines the maximum number of Pods that can exceed the desired number (set using replicas).
-      maxUnavailable: 1 # defines the maximum number of Pods that are not operational.
+      maxSurge: 1 # Maximum extra Pods allowed during updates. With 3 replicas, allows up to 4 Pods temporarily for smooth transitions. Default: 25%
+      maxUnavailable: 1 # Maximum Pods that can be unavailable during updates. Ensures at least 2/3 Pods remain running for availability. Default: 25%
   template:
     metadata:
       labels:
